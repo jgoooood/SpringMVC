@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+<!-- 	mybatis-config.xml에서 적었던 코드를 가져와서 작성해줌 -> 임포트한 클래스를 bean에 등록함 -->
+<!-- 	<environments default="development"> -->
+<!-- 		<environment id="development"> -->
+<!-- 			<transactionManager type="JDBC"></transactionManager> -->
+<!-- 			<dataSource type="POOLED"> -->
+<!-- 				<property name="driver" value=""/> -->
+<!-- 				<property name="url" value=""/> -->
+<!-- 				<property name="username" value=""/> -->
+<!-- 				<property name="password" value=""/> -->
+<!-- 			</dataSource> -->
+<!-- 		</environment> -->
+<!-- 	</environments> -->	
+	<!-- SQL 연결작업 -->
+	<!-- 1. bean등록 : BasicDataSource클래스 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<!-- 2.setter메소드를 통해 의존성주입 : 필드초기화 -->
+		<!-- set빼고 작성 -->
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url" 			 value="jdbc:oracle:thin:@127.0.0.1:1521:xe" />
+		<property name="username" 		 value="SPRING" />
+		<property name="password" 		 value="SPRING" />
+	</bean>
+	
+	<!-- 3. SqlSession 클래스 bean등록(SqlSessionFactoryBean) 공장 만듬 -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>	
+	
+	<!-- 4. 공장이 연결만듬 -->
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<!-- 위에서 등록한 객체를 넘겨받음 -->
+		<constructor-arg ref="sqlSession"></constructor-arg>
+	</bean>
+	<!-- SQL 연결작업완료 -->
+</beans>

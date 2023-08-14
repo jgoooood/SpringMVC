@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 별칭부여 -->
+	<typeAliases>
+		<typeAlias type="kr.co.coupang.member.domain.Member" alias="Member"/>
+	</typeAliases>
+<!-- 	SQL탬플릿 사용시 작성 -> 스프링에서는 root-context.xml파일로 코드이동 함 -->
+<!-- 	<environments default="development"> -->
+<!-- 		<environment id="development"> -->
+<!-- 			<transactionManager type="JDBC"></transactionManager> -->
+<!-- 			<dataSource type="POOLED"> -->
+<!-- 				<property name="driver" value=""/> -->
+<!-- 				<property name="url" value=""/> -->
+<!-- 				<property name="username" value=""/> -->
+<!-- 				<property name="password" value=""/> -->
+<!-- 			</dataSource> -->
+<!-- 		</environment> -->
+<!-- 	</environments> -->
+	<!-- mapper등록 안할 때 뜨는 오류
+	Mapped Statements collection does not contain value for ### -->
+	<mappers>
+		<mapper resource="mappers/member-mapper.xml" />
+	</mappers>
+</configuration>
